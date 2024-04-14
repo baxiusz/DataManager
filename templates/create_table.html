@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Table</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h2>Create Table</h2>
+    <form action="/process_create_table" method="POST">
+        <label for="db_name">Database:</label>
+        <select id="db_name" name="db_name">
+            {% for database in databases %}
+                <option value="{{ database }}">{{ database }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="table_name">Table Name:</label>
+        <input type="text" id="table_name" name="table_name"><br><br>
+        <label for="columns">Columns (comma-separated):</label>
+        <input type="text" id="columns" name="columns"><br><br>
+        <input type="submit" value="Create Table" class="button">
+        <a href="/" class="button">Back to Menu</a>
+    </form>
+    
+</body>
+</html>

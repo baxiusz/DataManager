@@ -1,0 +1,152 @@
+/* CSS */
+.button {
+  align-items: center;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
+.button:active,
+.button:focus {
+  outline: none;
+}
+
+.button:hover {
+  background-position: -20px -20px;
+}
+
+.button:focus:not(:active) {
+  box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#table_columns {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#table_columns th, #table_columns td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+/* Style for the data display div */
+#data_display {
+  width: 100%; /* Make the div full width */
+  overflow-x: auto; /* Add horizontal scroll if table overflows */
+}
+
+/* Style for the table */
+#data_display table {
+  width: 100%; /* Make the table full width of its container */
+  border-collapse: collapse; /* Collapse borders */
+}
+
+/* Style for table data cells */
+#data_display td {
+  padding: 8px; /* Padding for data cells */
+  border: 1px solid #ddd; /* Add border */
+  text-align: left !important; /* Align text to the left */
+}
+
+/* Style for table header cells */
+#data_display th {
+  background-color: #f2f2f2; /* Light gray background */
+  padding: 8px; /* Padding for header cells */
+  border: 1px solid #ddd; /* Add border */
+  text-align: center !important; /* Align text to the center */
+}
+
+/* Style for alternating row colors */
+#data_display tr:nth-child(even) {
+  background-color: #f9f9f9; /* Lighter gray background for even rows */
+}
+
+.flash-messages-container {
+  position: fixed;
+  bottom: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  text-align: center;
+}
+
+.flash-message {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.flash-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.flash-error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}

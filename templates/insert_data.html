@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h2>Insert Data</h2>
+    <form action="/process_insert_data" method="POST">
+        <label for="db_name">Database Name:</label>
+        <select id="db_name" name="db_name">
+            <option value="">-- Select Database --</option> <!-- Blank choice -->
+            {% for database in databases %}
+                <option value="{{ database }}">{{ database }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="table_name">Table Name:</label>
+        <select id="table_name" name="table_name">
+            <option value="">-- Select Table --</option> <!-- Blank choice -->
+            {% for table in tables %}
+                <option value="{{ table }}">{{ table }}</option>
+            {% endfor %}
+        </select><br><br>
+        <h2>Table Columns</h2>
+        <table id="table_columns">
+            <tbody>
+                <!-- Table columns will be dynamically added here -->
+            </tbody>
+        </table>
+        <label for="data">Data (comma-separated):</label>
+        <input type="text" id="data" name="data"><br><br>
+        <input type="submit" value="Insert Data" class="button">
+        <a href="/" class="button">Back to Menu</a>
+    </form>
+    <script>
+        document.getElementById('db_name').addEventListener('change', function() {
+            console.log("Database dropdown changed");
+            var db_name = this.value;
+            console.log("Selected database:", db_name);
+            if (db_name !== "") {
+                fetch('/get_tables', {
+                    method: 'POST',
+                    body: JSON.stringify({ db_name: db_name }),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Tables fetched:", data);
+                    var tableSelect = document.getElementById('table_name');
+                    tableSelect.innerHTML = ''; // Clear previous options
+                    // Add placeholder option
+                    var placeholderOption = document.createElement('option');
+                    placeholderOption.value = '';
+                    placeholderOption.textContent = '-- Select Table --';
+                    tableSelect.appendChild(placeholderOption);
+                    // Add fetched tables
+                    data.forEach(function(table) {
+                        var option = document.createElement('option');
+                        option.value = table;
+                        option.textContent = table;
+                        tableSelect.appendChild(option);
+                    });
+                });
+            }
+        });
+        document.getElementById('table_name').addEventListener('change', function() {
+            var tableName = this.value;
+            var dbName = document.getElementById('db_name').value; // Retrieve selected database name
+            if (tableName !== "") {
+                fetch('/get_columns', {
+                    method: 'POST',
+                    body: JSON.stringify({ table_name: tableName, db_name: dbName }), // Use dbName instead of undefined dbName
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Clear previous table columns
+                    var tableBody = document.querySelector('#table_columns tbody');
+                    tableBody.innerHTML = '';
+
+                    // Populate table with columns in a single row
+                    var row = tableBody.insertRow(); // Create a single row
+                    data.forEach(function(column) {
+                        var cell = row.insertCell(); // Insert cell into the row
+                        cell.textContent = column;
+                        cell.style.width = 'auto'; // Set the width of the cell to auto
+                    });
+                });
+            }
+        });
+ 
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>View Data</h2>
+    <form action="/process_view_data" method="POST">
+        <label for="db_name">Database Name:</label>
+        <select id="db_name" name="db_name">
+            <option value="">-- Select Database --</option> <!-- Blank choice -->
+            {% for database in databases %}
+                <option value="{{ database }}">{{ database }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="table_name">Table Name:</label>
+        <select id="table_name" name="table_name">
+            <option value="">-- Select Table --</option> <!-- Blank choice -->
+            {% for table in tables %}
+                <option value="{{ table }}">{{ table }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="View Data" class="button">
+        <a href="/" class="button">Back to Menu</a>
+    </form>
+
+
+    <div id="data_display">
+        <!-- Data will be displayed here -->
+        {% if table %}
+            {{ table | safe }}
+        {% endif %}
+    </div>
+
+    <div class="flash-messages-container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        document.getElementById('db_name').addEventListener('change', function() {
+            console.log("Database dropdown changed");
+            var db_name = this.value;
+            console.log("Selected database:", db_name);
+            if (db_name !== "") {
+                fetch('/get_tables', {
+                    method: 'POST',
+                    body: JSON.stringify({ db_name: db_name }),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Tables fetched:", data);
+                    var tableSelect = document.getElementById('table_name');
+                    tableSelect.innerHTML = '';
+                    data.forEach(function(table) {
+                        var option = document.createElement('option');
+                        option.value = table;
+                        option.textContent = table;
+                        tableSelect.appendChild(option);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
