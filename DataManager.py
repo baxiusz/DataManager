@@ -80,12 +80,7 @@ def process_view_data():
         headers = [column[1] for column in columns]  # Extract column names
         data = db_manager.select_data(table_name, limit=200)  # Limit to first 200 values
         
-        # Check if there is any data in the table
-        if len(data) <= 1:
-            flash.clear()
-            flash('No data found in the table!', 'info')
-            return redirect(url_for('view_data'))
-        
+
         table = tabulate(data, headers=headers, tablefmt='html')
         db_manager.close()
         flash('Table found and data viewed successfully!', 'success')
