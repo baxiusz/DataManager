@@ -19,7 +19,7 @@ pip install flask tabulate
 3. Run the Flask application:
 
 ```bash
-python app.py
+python DataManager.py
 ```
 
 4. Access the web interface by visiting [http://localhost:5000/](http://localhost:5000/) in your web browser.
@@ -64,7 +64,7 @@ python app.py
 
 ## Structure
 
-- `app.py`: Contains the Flask application with routes for handling database operations.
+- `DataManager.py`: Contains the Flask application with routes for handling database operations.
 - `base_manager.py`: Defines the `DatabaseManager` class responsible for managing SQLite databases and tables.
 
 ## Note
